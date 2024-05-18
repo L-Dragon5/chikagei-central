@@ -1,0 +1,44 @@
+# fly.toml app configuration file generated for chikagei-central-holy-resonance-7602 on 2024-05-18T18:45:29-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'chikagei-central'
+primary_region = 'iad'
+console_command = 'php /var/www/html/artisan tinker'
+
+[build]
+  [build.args]
+    NODE_VERSION = '18'
+    PHP_VERSION = '8.2'
+
+[env]
+  APP_ENV = 'production'
+  LOG_CHANNEL = 'stderr'
+  LOG_LEVEL = 'info'
+  LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
+  SESSION_DRIVER = "file"
+  SESSION_LIFETIME = "120"
+  SESSION_SECURE_COOKIE = "true"
+  DB_CONNECTION = "sqlite"
+  PHP_MEMORY_LIMIT = "512M"
+  PHP_POST_MAX_SIZE = "20M"
+  PHP_UPLOAD_MAX_FILE_SIZE = "10M"
+  PHP_MAX_FILE_UPLOADS = "50"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[mounts]
+  source = "storage_vol"
+  destination = "/var/www/html/storage"
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
