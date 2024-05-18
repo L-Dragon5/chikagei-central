@@ -15,7 +15,9 @@ class ChikageiController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Public/ChikageiList');
+        return Inertia::render('Public/ChikageiList', [
+            'allChikagei' => Chikagei::all(),
+        ]);
     }
 
     /**

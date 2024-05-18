@@ -38,12 +38,12 @@ export const PublicNav = () => {
       bgColor={useColorModeValue('orange.200', 'orange.700')}
       shadow="md"
     >
-      <HStack spacing={4}>
+      <HStack spacing={8}>
         <Link
           as={InertiaLink}
           href="/"
           borderBottom={url === '/' ? '1px solid' : null}
-          _hover={{ borderBottom: null }}
+          _hover={{ borderBottom: '1px solid' }}
         >
           Home
         </Link>
@@ -54,7 +54,7 @@ export const PublicNav = () => {
             as={InertiaLink}
             href={linkObj.route}
             borderBottom={url.startsWith(linkObj.route) ? '1px solid' : null}
-            _hover={{ borderBottom: null }}
+            _hover={{ borderBottom: '1px solid' }}
           >
             {linkObj.name}
           </Link>

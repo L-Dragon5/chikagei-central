@@ -15,7 +15,9 @@ class MixController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Public/MIXList');
+        return Inertia::render('Public/MIXList', [
+            'allMix' => Mix::all(),
+        ]);
     }
 
     /**
@@ -39,7 +41,9 @@ class MixController extends Controller
      */
     public function show(Mix $mix)
     {
-        //
+        return Inertia::render('Public/MIXDetailed', [
+            'mix' => $mix,
+        ]);
     }
 
     /**

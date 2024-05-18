@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { PublicLayout } from '@/components/PublicLayout';
 
-const ChikageiList = () => {
+const ChikageiList = ({ allChikagei }) => {
   return <PublicLayout title="Chikagei List" />;
 };
 

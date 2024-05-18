@@ -2,7 +2,6 @@ import { InfoIcon, ViewIcon } from '@chakra-ui/icons';
 import {
   Button,
   HStack,
-  Link,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -11,36 +10,19 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react';
 import { Link as InertiaLink } from '@inertiajs/react';
-import { useState } from 'react';
+import Markdown from 'react-markdown';
 
 import { PublicLayout } from '@/components/PublicLayout';
 
-const MIXList = () => {
-  const data = [
-    {
-      id: 1,
-      name: 'Standard MIX',
-      romaji: 'Taigā―! Faiyā―! Saibā―! Faibā―! Daibā―! Baibā！\n\nJyā Jyā―!',
-    },
-    {
-      id: 2,
-      name: 'Standard MIX (Extended)',
-      romaji:
-        'Taigā―! Faiyā―! Saibā―! Faibā―! Daibā―! Baibā！\n\nJyā Jyā―! Faibō―! Waipā―!',
-    },
-  ];
-
+const MIXList = ({ allMix }) => {
   return (
     <PublicLayout title="Index">
       <TableContainer>
@@ -52,7 +34,7 @@ const MIXList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((mix) => (
+            {allMix.map((mix) => (
               <Tr key={`mix-${mix.id}`}>
                 <Td>{mix.name}</Td>
                 <Td>
@@ -81,7 +63,7 @@ const MIXList = () => {
                         <PopoverArrow />
                         <PopoverCloseButton />
                         <PopoverBody whiteSpace="pre-wrap">
-                          {mix.romaji}
+                          <Markdown>{mix.words}</Markdown>
                         </PopoverBody>
                       </PopoverContent>
                     </Popover>

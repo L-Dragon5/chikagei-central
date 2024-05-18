@@ -17,8 +17,8 @@ import { PublicLayout } from '@/components/PublicLayout';
 
 const Index = () => {
   return (
-    <PublicLayout title="Index">
-      <Grid minH="300px" templateColumns="repeat(3, 1fr)" gap={4} p={4}>
+    <PublicLayout title="Index" p={4}>
+      <Grid minH="300px" templateColumns="repeat(3, 1fr)" gap={4}>
         <GridItem as={Card} colSpan={2}>
           <CardHeader>
             <Heading as="h1" size="lg">
