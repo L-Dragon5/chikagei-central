@@ -19,28 +19,48 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Link as InertiaLink } from '@inertiajs/react';
-import Markdown from 'react-markdown';
+import MDEditor from '@uiw/react-md-editor';
+import { useRef } from 'react';
 
+import { MixForm } from '@/components/MixForm';
 import { PublicLayout } from '@/components/PublicLayout';
 import { useAuthUser } from '@/lib/user';
 
 const MIXList = ({ allMix }) => {
   const { user } = useAuthUser();
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const addMixBtnRef = useRef();
+
   return (
     <PublicLayout title="Index">
       {user ? (
-        <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
-          <Heading as="h4" size="md">
-            Admin Tools
-          </Heading>
-          <Spacer />
-          <Button leftIcon={<AddIcon />} colorScheme="purple">
-            Add MIX
-          </Button>
-        </HStack>
+        <>
+          <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
+            <Heading as="h4" size="md">
+              Admin Tools
+            </Heading>
+            <Spacer />
+            <Button
+              ref={addMixBtnRef}
+              leftIcon={<AddIcon />}
+              colorScheme="purple"
+              onClick={onOpen}
+            >
+              Add MIX
+            </Button>
+          </HStack>
+          <MixForm
+            key="create-mix-form"
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={addMixBtnRef}
+          />
+        </>
       ) : null}
 
       <TableContainer>
@@ -80,8 +100,11 @@ const MIXList = ({ allMix }) => {
                         <PopoverHeader>{mix.name}</PopoverHeader>
                         <PopoverArrow />
                         <PopoverCloseButton />
-                        <PopoverBody whiteSpace="pre-wrap">
-                          <Markdown>{mix.words}</Markdown>
+                        <PopoverBody>
+                          <MDEditor.Markdown
+                            source={mix.words}
+                            style={{ whiteSpace: 'pre-wrap' }}
+                          />
                         </PopoverBody>
                       </PopoverContent>
                     </Popover>

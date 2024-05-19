@@ -33,7 +33,9 @@ class MixController extends Controller
      */
     public function store(StoreMixRequest $request)
     {
-        //
+        Mix::create($request->validated());
+
+        return to_route('mix.index');
     }
 
     /**
@@ -51,7 +53,7 @@ class MixController extends Controller
      */
     public function edit(Mix $mix)
     {
-        //
+        // 
     }
 
     /**
@@ -59,7 +61,9 @@ class MixController extends Controller
      */
     public function update(UpdateMixRequest $request, Mix $mix)
     {
-        //
+        $mix->update($request->validated());
+
+        return to_route('mix.show', ['mix' => $mix->id]);
     }
 
     /**

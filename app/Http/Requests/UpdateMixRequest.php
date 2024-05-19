@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMixRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateMixRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +22,14 @@ class UpdateMixRequest extends FormRequest
      */
     public function rules(): array
     {
+        $mixId = $this->route('mix')->id;
+
         return [
-            //
+            'name' => ['required', Rule::unique('mix')->ignore($mixId), 'string', 'max:255'],
+            'jp_name' => ['nullable', Rule::unique('mix')->ignore($mixId), 'string', 'max:255'],
+            'words' => 'nullable|string',
+            'jp_words' => 'nullable|string',
+            'notes' => 'nullable|string',
         ];
     }
 }

@@ -12,20 +12,25 @@ import {
   GridItem,
   Heading,
   HStack,
-  SimpleGrid,
   Skeleton,
   Spacer,
   Stack,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Link as InertiaLink } from '@inertiajs/react';
-import Markdown from 'react-markdown';
+import MDEditor from '@uiw/react-md-editor';
+import { useRef } from 'react';
 
+import { MixForm } from '@/components/MixForm';
 import { PublicLayout } from '@/components/PublicLayout';
 import { useAuthUser } from '@/lib/user';
 
 const MIXDetailed = ({ mix }) => {
   const { user } = useAuthUser();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const editMixBtnRef = useRef();
 
   return (
     <PublicLayout title={mix.name}>
@@ -54,15 +59,30 @@ const MIXDetailed = ({ mix }) => {
       </Breadcrumb>
 
       {user ? (
-        <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
-          <Heading as="h4" size="md">
-            Admin Tools
-          </Heading>
-          <Spacer />
-          <Button leftIcon={<EditIcon />} colorScheme="purple">
-            Edit MIX
-          </Button>
-        </HStack>
+        <>
+          <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
+            <Heading as="h4" size="md">
+              Admin Tools
+            </Heading>
+            <Spacer />
+            <Button
+              ref={editMixBtnRef}
+              leftIcon={<EditIcon />}
+              colorScheme="purple"
+              onClick={onOpen}
+            >
+              Edit MIX
+            </Button>
+          </HStack>
+          <MixForm
+            key={`edit-mix-form-${mix.id}`}
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={editMixBtnRef}
+            mix={mix}
+          />
+        </>
       ) : null}
 
       <Box p={4}>
@@ -87,7 +107,11 @@ const MIXDetailed = ({ mix }) => {
                 English Romaji
               </Heading>
             </CardHeader>
-            <CardBody as={Markdown}>{mix.words}</CardBody>
+            <CardBody
+              as={MDEditor.Markdown}
+              source={mix.words}
+              style={{ whiteSpace: 'pre-wrap' }}
+            />
           </Card>
           <Card as={GridItem}>
             <CardHeader>
@@ -95,7 +119,11 @@ const MIXDetailed = ({ mix }) => {
                 Original Japanese
               </Heading>
             </CardHeader>
-            <CardBody as={Markdown}>{mix.jp_words}</CardBody>
+            <CardBody
+              as={MDEditor.Markdown}
+              source={mix.jp_words}
+              style={{ whiteSpace: 'pre-wrap' }}
+            />
           </Card>
           <Card as={GridItem} rowSpan={2}>
             <CardHeader>
@@ -115,7 +143,11 @@ const MIXDetailed = ({ mix }) => {
                 Notes
               </Heading>
             </CardHeader>
-            <CardBody as={Markdown}>{mix.notes}</CardBody>
+            <CardBody
+              as={MDEditor.Markdown}
+              source={mix.notes}
+              style={{ whiteSpace: 'pre-wrap' }}
+            />
           </Card>
         </Grid>
       </Box>

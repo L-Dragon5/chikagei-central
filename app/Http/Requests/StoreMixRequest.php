@@ -11,7 +11,7 @@ class StoreMixRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreMixRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|unique:mix,name|string|max:255',
+            'jp_name' => 'nullable|unique:mix,jp_name|string|max:255',
+            'words' => 'nullable|string',
+            'jp_words' => 'nullable|string',
+            'notes' => 'nullable|string',
         ];
     }
 }
