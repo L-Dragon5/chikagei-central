@@ -1,6 +1,7 @@
-import { InfoIcon, ViewIcon } from '@chakra-ui/icons';
+import { AddIcon, InfoIcon, ViewIcon } from '@chakra-ui/icons';
 import {
   Button,
+  Heading,
   HStack,
   Popover,
   PopoverArrow,
@@ -9,6 +10,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  Spacer,
   Table,
   TableContainer,
   Tbody,
@@ -16,17 +18,33 @@ import {
   Th,
   Thead,
   Tr,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { Link as InertiaLink } from '@inertiajs/react';
 import Markdown from 'react-markdown';
 
 import { PublicLayout } from '@/components/PublicLayout';
+import { useAuthUser } from '@/lib/user';
 
 const MIXList = ({ allMix }) => {
+  const { user } = useAuthUser();
+
   return (
     <PublicLayout title="Index">
+      {user ? (
+        <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
+          <Heading as="h4" size="md">
+            Admin Tools
+          </Heading>
+          <Spacer />
+          <Button leftIcon={<AddIcon />} colorScheme="purple">
+            Add MIX
+          </Button>
+        </HStack>
+      ) : null}
+
       <TableContainer>
-        <Table variant="simple">
+        <Table variant="striped">
           <Thead>
             <Tr>
               <Th>Name</Th>

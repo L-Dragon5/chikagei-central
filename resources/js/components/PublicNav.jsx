@@ -1,5 +1,6 @@
 import { MoonIcon, SearchIcon, SunIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
   Flex,
   HStack,
   IconButton,
@@ -15,9 +16,12 @@ import { Link as InertiaLink, usePage } from '@inertiajs/react';
 import { useDebounce } from '@uidotdev/usehooks';
 import { useState } from 'react';
 
+import { useAuthUser } from '@/lib/user';
+
 export const PublicNav = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { url } = usePage();
+  const { user } = useAuthUser();
 
   const [quickSearchValue, setQuickSearchValue] = useState('');
   const debouncedQuickSearchValue = useDebounce(quickSearchValue, 300);
@@ -77,6 +81,7 @@ export const PublicNav = () => {
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
         />
+        {user?.id && <Avatar name={`Admin ${user.id}`} />}
       </HStack>
     </Flex>
   );

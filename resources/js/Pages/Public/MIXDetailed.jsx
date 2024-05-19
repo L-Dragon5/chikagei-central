@@ -1,17 +1,20 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
+import { ChevronRightIcon, EditIcon } from '@chakra-ui/icons';
 import {
   Box,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Button,
   Card,
   CardBody,
   CardHeader,
   Grid,
   GridItem,
   Heading,
+  HStack,
   SimpleGrid,
   Skeleton,
+  Spacer,
   Stack,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -19,8 +22,11 @@ import { Link as InertiaLink } from '@inertiajs/react';
 import Markdown from 'react-markdown';
 
 import { PublicLayout } from '@/components/PublicLayout';
+import { useAuthUser } from '@/lib/user';
 
 const MIXDetailed = ({ mix }) => {
+  const { user } = useAuthUser();
+
   return (
     <PublicLayout title={mix.name}>
       <Breadcrumb
@@ -46,6 +52,18 @@ const MIXDetailed = ({ mix }) => {
           </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
+
+      {user ? (
+        <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
+          <Heading as="h4" size="md">
+            Admin Tools
+          </Heading>
+          <Spacer />
+          <Button leftIcon={<EditIcon />} colorScheme="purple">
+            Edit MIX
+          </Button>
+        </HStack>
+      ) : null}
 
       <Box p={4}>
         <Heading as="h1" size="2xl">

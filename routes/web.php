@@ -10,6 +10,8 @@ Route::get('/', [IndexController::class, 'index']);
 Route::resource('chikagei', ChikageiController::class);
 Route::resource('mix', MixController::class);
 
-Route::fallback(function () {
-    return Inertia::render('Public/404');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', fn () => Inertia::render('Admin/Dashboard'))->name('dashboard');
 });
+
+Route::fallback(fn () => Inertia::render('Public/404'));
