@@ -16,7 +16,7 @@ class MixController extends Controller
     public function index(): Response
     {
         return Inertia::render('Public/MIXList', [
-            'allMix' => Mix::all(),
+            'allMix' => Mix::orderBy('name', 'ASC')->get(),
         ]);
     }
 
