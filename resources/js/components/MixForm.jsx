@@ -27,6 +27,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { isLoading, errors },
   } = useForm({
@@ -54,6 +55,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
             duration: 3000,
             isClosable: true,
           });
+          reset();
           onClose();
         },
         onError: (postErrors) => {

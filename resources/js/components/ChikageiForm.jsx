@@ -27,6 +27,7 @@ export const ChikageiForm = ({ chikagei = {}, onClose, ...rest }) => {
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { isLoading, errors },
   } = useForm({
@@ -52,6 +53,7 @@ export const ChikageiForm = ({ chikagei = {}, onClose, ...rest }) => {
             duration: 3000,
             isClosable: true,
           });
+          reset();
           onClose();
         },
         onError: (postErrors) => {
