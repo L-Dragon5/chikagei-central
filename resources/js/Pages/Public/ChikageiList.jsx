@@ -67,6 +67,7 @@ const ChikageiList = ({ allChikagei }) => {
           <Thead>
             <Tr>
               <Th>Name</Th>
+              <Th>Japanese Name</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -74,6 +75,7 @@ const ChikageiList = ({ allChikagei }) => {
             {allChikagei.map((chikagei) => (
               <Tr key={`chikagei-${chikagei.id}`}>
                 <Td>{chikagei.name}</Td>
+                <Td>{chikagei.jp_name}</Td>
                 <Td>
                   <HStack spacing={3}>
                     <Button

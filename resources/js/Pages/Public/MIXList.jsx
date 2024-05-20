@@ -73,6 +73,7 @@ const MIXList = ({ allMix }) => {
           <Thead>
             <Tr>
               <Th>Name</Th>
+              <Th>Japanese Name</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -80,6 +81,7 @@ const MIXList = ({ allMix }) => {
             {allMix.map((mix) => (
               <Tr key={`mix-${mix.id}`}>
                 <Td>{mix.name}</Td>
+                <Td>{mix.jp_name}</Td>
                 <Td>
                   <HStack spacing={3}>
                     <Button
