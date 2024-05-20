@@ -224,13 +224,15 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
         </DrawerBody>
         <DrawerFooter>
           <HStack w="full">
-            <Button
-              colorScheme="red"
-              onClick={handleDelete}
-              leftIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
+            {!isEmpty(mix) ? (
+              <Button
+                colorScheme="red"
+                onClick={handleDelete}
+                leftIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
+            ) : null}
             <Spacer />
             <ButtonGroup>
               <Button variant="outline" colorScheme="gray" onClick={onClose}>

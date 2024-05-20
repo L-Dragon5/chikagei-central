@@ -184,13 +184,15 @@ export const ChikageiForm = ({ chikagei = {}, onClose, ...rest }) => {
         </DrawerBody>
         <DrawerFooter>
           <HStack w="full">
-            <Button
-              colorScheme="red"
-              onClick={handleDelete}
-              leftIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
+            {!isEmpty(chikagei) ? (
+              <Button
+                colorScheme="red"
+                onClick={handleDelete}
+                leftIcon={<DeleteIcon />}
+              >
+                Delete
+              </Button>
+            ) : null}
             <Spacer />
             <ButtonGroup>
               <Button variant="outline" colorScheme="gray" onClick={onClose}>
