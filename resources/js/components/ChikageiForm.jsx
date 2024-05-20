@@ -23,7 +23,7 @@ import MDEditor from '@uiw/react-md-editor';
 import { isEmpty } from 'lodash';
 import { Controller, useForm } from 'react-hook-form';
 
-export const MixForm = ({ mix = {}, onClose, ...rest }) => {
+export const ChikageiForm = ({ chikagei = {}, onClose, ...rest }) => {
   const {
     control,
     register,
@@ -32,24 +32,22 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
   } = useForm({
     shouldUseNativeValidation: true,
     defaultValues: {
-      name: mix?.name ?? '',
-      jp_name: mix?.jp_name ?? '',
-      words: mix?.words ?? '',
-      jp_words: mix?.jp_words ?? '',
-      notes: mix?.notes ?? '',
-      examples: mix?.examples ?? '',
-      url_alias: mix?.url_alias ?? '',
+      name: chikagei?.name ?? '',
+      jp_name: chikagei?.jp_name ?? '',
+      notes: chikagei?.notes ?? '',
+      examples: chikagei?.examples ?? '',
+      url_alias: chikagei?.url_alias ?? '',
     },
   });
 
   const toast = useToast();
 
   const onSubmit = (data) => {
-    if (isEmpty(mix)) {
-      router.post('/mix', data, {
+    if (isEmpty(chikagei)) {
+      router.post('/chikagei', data, {
         onSuccess: () => {
           toast({
-            title: 'Successfully created MIX',
+            title: 'Successfully created chikagei',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -58,7 +56,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
         },
         onError: (postErrors) => {
           toast({
-            title: 'Error creating MIX',
+            title: 'Error creating chikagei',
             description: Object.values(postErrors)[0],
             status: 'error',
             duration: 4000,
@@ -67,10 +65,10 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
         },
       });
     } else {
-      router.put(`/mix/${mix.id}`, data, {
+      router.put(`/chikagei/${chikagei.id}`, data, {
         onSuccess: () => {
           toast({
-            title: 'Successfully updated MIX',
+            title: 'Successfully updated chikagei',
             status: 'success',
             duration: 3000,
             isClosable: true,
@@ -79,7 +77,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
         },
         onError: (putErrors) => {
           toast({
-            title: 'Error updating MIX',
+            title: 'Error updating chikagei',
             description: Object.values(putErrors)[0],
             status: 'error',
             duration: 4000,
@@ -91,10 +89,10 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
   };
 
   const handleDelete = (e) => {
-    router.delete(`/mix/${mix.id}`, {
+    router.delete(`/chikagei/${chikagei.id}`, {
       onSuccess: () => {
         toast({
-          title: 'Successfully deleted MIX',
+          title: 'Successfully deleted chikagei',
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -103,7 +101,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
       },
       onError: (deleteErrors) => {
         toast({
-          title: 'Error deleting MIX',
+          title: 'Error deleting chikagei',
           description: Object.values(deleteErrors)[0],
           status: 'error',
           duration: 4000,
@@ -118,7 +116,9 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
       <DrawerOverlay />
       <DrawerContent onSubmit={onSubmit}>
         <DrawerCloseButton />
-        <DrawerHeader>{isEmpty(mix) ? 'Add' : 'Edit'} MIX</DrawerHeader>
+        <DrawerHeader>
+          {isEmpty(chikagei) ? 'Add' : 'Edit'} Chikagei
+        </DrawerHeader>
         <DrawerBody>
           <Stack direction="column" spacing={4}>
             <FormControl id="name" isRequired>
@@ -131,46 +131,6 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
               <FormLabel>Japanese Name</FormLabel>
               <Input {...register('jp_name')} />
               <FormErrorMessage>{errors?.jp_name}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="words">
-              <FormLabel>English Romaji</FormLabel>
-              <Controller
-                name="words"
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <MDEditor
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    value={value}
-                    textareaProps={{
-                      placeholder: 'Please enter what you say in English',
-                    }}
-                    highlightEnable={false}
-                  />
-                )}
-              />
-              <FormErrorMessage>{errors?.words}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="jp_words">
-              <FormLabel>Original Japanese</FormLabel>
-              <Controller
-                name="jp_words"
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <MDEditor
-                    onBlur={onBlur}
-                    onChange={onChange}
-                    value={value}
-                    textareaProps={{
-                      placeholder: 'Please enter what you say in Japanese',
-                    }}
-                    highlightEnable={false}
-                  />
-                )}
-              />
-              <FormErrorMessage>{errors?.jp_words}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="notes">
@@ -213,7 +173,7 @@ export const MixForm = ({ mix = {}, onClose, ...rest }) => {
               <FormErrorMessage>{errors?.examples}</FormErrorMessage>
             </FormControl>
 
-            {!isEmpty(mix) ? (
+            {!isEmpty(chikagei) ? (
               <FormControl id="url_alias">
                 <FormLabel>URL Alias</FormLabel>
                 <Input {...register('url_alias')} />

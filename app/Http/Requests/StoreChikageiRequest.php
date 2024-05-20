@@ -11,7 +11,7 @@ class StoreChikageiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreChikageiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|unique:chikagei,name|string|max:255',
+            'jp_name' => 'nullable|unique:chikagei,jp_name|string|max:255',
+            'notes' => 'nullable|string',
+            'examples' => 'nullable|string',
         ];
     }
 }

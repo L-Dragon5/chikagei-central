@@ -16,6 +16,7 @@ const theme = extendTheme({
 });
 
 createInertiaApp({
+  title: (title) => `${title} | CC`,
   progress: {
     color: '#29d',
   },

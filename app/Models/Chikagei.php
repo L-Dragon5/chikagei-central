@@ -8,10 +8,5 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Chikagei extends Model
 {
     protected $table = 'chikagei';
-    protected $fillable = ['name', 'jp_name', 'notes'];
-    
-    public function examples(): HasMany
-    {
-        return $this->hasMany(ChikageiExample::class);
-    }
+    protected $fillable = ['name', 'jp_name', 'notes', 'url_alias', 'examples'];
 }

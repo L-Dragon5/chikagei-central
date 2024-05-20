@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Mix extends Model
 {
    protected $table = 'mix';
-   protected $fillable = ['name', 'jp_name', 'words', 'jp_words', 'notes'];
+   protected $fillable = ['name', 'jp_name', 'words', 'jp_words', 'notes', 'url_alias', 'examples'];
 }

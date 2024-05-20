@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMixRequest;
 use App\Http\Requests\UpdateMixRequest;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class MixController extends Controller
 {
@@ -21,19 +22,16 @@ class MixController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreMixRequest $request)
     {
-        Mix::create($request->validated());
+        $validated = $request->validated();
+
+        Mix::create([
+            ...$validated,
+            'url_alias' => Str::kebab($validated['name']),
+        ]);
 
         return to_route('mix.index');
     }
@@ -41,19 +39,21 @@ class MixController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mix $mix)
+    public function show(String $alias)
     {
-        return Inertia::render('Public/MIXDetailed', [
-            'mix' => $mix,
-        ]);
-    }
+        if (is_numeric($alias)) {
+            $mix = Mix::findOrFail($alias);
+        } else {
+            $mix = Mix::where('url_alias', $alias)->firstOrFail();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mix $mix)
-    {
-        // 
+        if (!empty($mix)) {
+            return Inertia::render('Public/MIXDetailed', [
+                'mix' => $mix,
+            ]);
+        }
+
+        return to_route('mix.index');
     }
 
     /**
@@ -63,7 +63,7 @@ class MixController extends Controller
     {
         $mix->update($request->validated());
 
-        return to_route('mix.show', ['mix' => $mix->id]);
+        return to_route('mix.show', ['alias' => !empty($mix->url_alias) ? $mix->url_alias : $mix->id]);
     }
 
     /**
@@ -71,6 +71,8 @@ class MixController extends Controller
      */
     public function destroy(Mix $mix)
     {
-        //
+        $mix->delete();
+
+        return to_route('mix.index');
     }
 }

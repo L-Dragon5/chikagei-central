@@ -25,6 +25,7 @@ import { Link as InertiaLink } from '@inertiajs/react';
 import MDEditor from '@uiw/react-md-editor';
 import { useRef } from 'react';
 
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { MixForm } from '@/components/MixForm';
 import { PublicLayout } from '@/components/PublicLayout';
 import { useAuthUser } from '@/lib/user';
@@ -35,8 +36,12 @@ const MIXList = ({ allMix }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addMixBtnRef = useRef();
 
+  const breadcrumbData = [{ href: '#', name: 'MIX List', isCurrentPage: true }];
+
   return (
-    <PublicLayout title="Index">
+    <PublicLayout title="MIX List">
+      <Breadcrumbs breadcrumbData={breadcrumbData} />
+
       {user ? (
         <>
           <HStack bgColor={useColorModeValue('red.200', 'red.700')} p={4}>
@@ -79,7 +84,7 @@ const MIXList = ({ allMix }) => {
                   <HStack spacing={3}>
                     <Button
                       as={InertiaLink}
-                      href={`/mix/${mix.id}`}
+                      href={`/mix/${mix.url_alias ?? mix.id}`}
                       variant="solid"
                       colorScheme="teal"
                       leftIcon={<InfoIcon />}

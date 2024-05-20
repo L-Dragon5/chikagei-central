@@ -27,6 +27,7 @@ class StoreMixRequest extends FormRequest
             'words' => 'nullable|string',
             'jp_words' => 'nullable|string',
             'notes' => 'nullable|string',
+            'examples' => 'nullable|string',
         ];
     }
 }

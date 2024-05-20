@@ -7,6 +7,7 @@ use App\Http\Requests\StoreChikageiRequest;
 use App\Http\Requests\UpdateChikageiRequest;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class ChikageiController extends Controller
 {
@@ -21,35 +22,38 @@ class ChikageiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreChikageiRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Chikagei::create([
+            ...$validated,
+            'url_alias' => Str::kebab($validated['name']),
+        ]);
+
+        return to_route('chikagei.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Chikagei $chikagei)
+    public function show(String $alias)
     {
-        //
-    }
+        if (is_numeric($alias)) {
+            $chikagei = Chikagei::findOrFail($alias);
+        } else {
+            $chikagei = Chikagei::where('url_alias', $alias)->firstOrFail();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Chikagei $chikagei)
-    {
-        //
+        if (!empty($chikagei)) {
+            return Inertia::render('Public/ChikageiDetailed', [
+                'chikagei' => $chikagei,
+            ]);
+        }
+
+        return to_route('chikagei.index');
     }
 
     /**
@@ -57,7 +61,9 @@ class ChikageiController extends Controller
      */
     public function update(UpdateChikageiRequest $request, Chikagei $chikagei)
     {
-        //
+        $chikagei->update($request->validated());
+
+        return to_route('chikagei.show', ['alias' => !empty($chikagei->url_alias) ? $chikagei->url_alias : $chikagei->id]);
     }
 
     /**
@@ -65,6 +71,8 @@ class ChikageiController extends Controller
      */
     public function destroy(Chikagei $chikagei)
     {
-        //
+        $chikagei->delete();
+
+        return to_route('chikagei.index');
     }
 }
