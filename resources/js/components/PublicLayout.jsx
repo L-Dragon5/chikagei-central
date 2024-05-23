@@ -15,7 +15,7 @@ export const PublicLayout = ({
       <Head title={title ?? ''} />
       <SkipNavLink id="main-skip-nav">Skip to content</SkipNavLink>
       {!disableNav ? <PublicNav /> : <Box />}
-      <Flex as="main" flexDirection="column" h="full" {...rest}>
+      <Flex as="main" flexDirection="column" h="full" w="100vw" {...rest}>
         <SkipNavContent id="main-skip-nav" />
         {children}
       </Flex>

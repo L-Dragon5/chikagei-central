@@ -41,6 +41,9 @@ export const PublicNav = () => {
       py={2}
       bgColor={useColorModeValue('orange.200', 'orange.700')}
       shadow="md"
+      position="sticky"
+      top={0}
+      zIndex={1}
     >
       <HStack spacing={8}>
         <Link
@@ -66,17 +69,6 @@ export const PublicNav = () => {
       </HStack>
       <Spacer />
       <HStack>
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <SearchIcon color="gray.500" />
-          </InputLeftElement>
-          <Input
-            bgColor={useColorModeValue('gray.50', 'gray.600')}
-            placeholder="Quick search"
-            onChange={handleQuickSearchChange}
-            _placeholder={{ color: 'gray.500' }}
-          />
-        </InputGroup>
         <IconButton
           icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           onClick={toggleColorMode}
