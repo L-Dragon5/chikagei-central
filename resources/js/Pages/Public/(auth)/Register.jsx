@@ -9,6 +9,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { useForm } from '@inertiajs/react';
+import bcrypt from 'bcryptjs-react';
 import { useState } from 'react';
 
 import { PublicLayout } from '@/components/PublicLayout';
@@ -35,7 +36,12 @@ const Register = () => {
 
   const onValidate = (e) => {
     e.preventDefault();
-    if (validationPassword === 'insert-something-here') {
+    if (
+      bcrypt.compareSync(
+        validationPassword,
+        '$2a$08$yXtDW5FJ.gGuJtTpb4JhGuXvbpLtgZZdryW4eMdTcG2OcBxHFeNt2',
+      )
+    ) {
       setIsValidated(true);
     }
   };
